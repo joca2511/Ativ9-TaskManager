@@ -1,0 +1,19 @@
+class InMemoryStorage:
+    def __init__(self):
+        self._data = {}
+    def add(self, id, item):
+        self._data[id] = item
+    def get(self, id):
+        return self._data.get(id)
+    def get_all(self):
+        allData = []
+        for x in self._data:
+            allData.append(x)
+        return allData
+    def delete(self,id):
+        if id in self._data:
+            self._data.pop(id)
+            return True
+        return False
+    def clear(self):
+        self._data.clear()
