@@ -9,6 +9,7 @@ Estrutura do projeto:
     - service.py   
 - tests/  
     - test_task.py  
-    - test_repository.py  
-requirements.txt   
-README.md   
+    - test_repository.py
+- requirements.txt   
+- README.md   
+
