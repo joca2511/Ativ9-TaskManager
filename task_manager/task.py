@@ -9,16 +9,21 @@ class Status(Enum):
     EM_PROGRESSO = "em_progresso"
     CONCLUIDA = "concluida"
 class Task:
-    def __init__(self, id,titulo,descricao,prioridade,status,prazo=None,):
-        self.id = int(id)
+    def __init__(self, id, titulo, descricao, prioridade, status, prazo=None):
+        if id is None:
+            self.id = None
+        else:
+            self.id = int(id)
         self.titulo = str(titulo)
         self.descricao = str(descricao)
         self.prioridade = prioridade
         self.prazo = prazo
         self.status = status
-    def validar(self,titulo,prazo):
-        if len(titulo)<3 or prazo == None:
-            raise ValueError()
-        
-    
+
+    def validar(self):
+        if len(self.titulo) < 3 or self.prazo is None:
+            raise ValueError("Título muito curto ou prazo inválido")
+        if self.prazo < datetime.now():
+            raise ValueError("Prazo não pode ser no passado")
+
     
