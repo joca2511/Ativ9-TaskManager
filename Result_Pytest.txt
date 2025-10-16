@@ -1,0 +1,55 @@
+(.venv) PS C:\Users\unifasuga\Documents\ATV5\Atv-09\Ativ9-TaskManager> pytest -v
+====================================================================================================== test session starts ======================================================================================================
+platform win32 -- Python 3.9.13, pytest-7.4.0, pluggy-1.6.0 -- C:\Users\unifasuga\Documents\ATV5\Atv-09\Ativ9-TaskManager\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\unifasuga\Documents\ATV5\Atv-09\Ativ9-TaskManager
+plugins: mock-3.11.1
+collected 7 items                                                                                                                                                                                                                
+
+tests/test_repository.py::test_save_atribui_id PASSED                                                                                                                                                                      [ 14%] 
+tests/test_repository.py::test_save_chama_storage_add PASSED                                                                                                                                                               [ 28%] 
+tests/test_repository.py::test_find_id_chama_storage_get PASSED                                                                                                                                                            [ 42%] 
+tests/test_repository.py::test_find_all_retorna_lista PASSED                                                                                                                                                               [ 57%] 
+tests/test_task.py::test_task_valida FAILED                                                                                                                                                                                [ 71%]
+tests/test_task.py::test_titulo_curto_invalido FAILED                                                                                                                                                                      [ 85%] 
+tests/test_task.py::test_prazo_passado FAILED                                                                                                                                                                              [100%] 
+
+=========================================================================================================== FAILURES ============================================================================================================ 
+_______________________________________________________________________________________________________ test_task_valida ________________________________________________________________________________________________________ 
+
+    def test_task_valida():
+        prazo = datetime.now() + timedelta(days=1)
+        task = Task(None, "Estudar", "Python", Priority.ALTA, Status.PENDENTE, prazo)
+
+        # Como o método validar espera argumentos, vamos chamar com os atributos da task
+>       task.validar(task.titulo, task.prazo)  # Não deve lançar erro
+E       TypeError: validar() takes 1 positional argument but 3 were given
+
+tests\test_task.py:10: TypeError
+__________________________________________________________________________________________________ test_titulo_curto_invalido ___________________________________________________________________________________________________ 
+
+    def test_titulo_curto_invalido():
+        prazo = datetime.now() + timedelta(days=1)
+        task = Task(None, "AB", "Desc", Priority.BAIXA, Status.PENDENTE, prazo)
+
+        with pytest.raises(ValueError):
+>           task.validar(task.titulo, task.prazo)
+E           TypeError: validar() takes 1 positional argument but 3 were given
+
+tests\test_task.py:19: TypeError
+______________________________________________________________________________________________________ test_prazo_passado _______________________________________________________________________________________________________ 
+
+    def test_prazo_passado():
+        prazo = datetime.now() - timedelta(days=1)  # Corrigido datetime.now()
+        task = Task(None, "Rapaaaaaaiz", "Ta losco", Priority.MEDIA, Status.PENDENTE, prazo)
+
+        with pytest.raises(ValueError):
+>           task.validar(task.titulo, task.prazo)
+E           TypeError: validar() takes 1 positional argument but 3 were given
+
+tests\test_task.py:26: TypeError
+==================================================================================================== short test summary info ==================================================================================================== 
+FAILED tests/test_task.py::test_task_valida - TypeError: validar() takes 1 positional argument but 3 were given
+FAILED tests/test_task.py::test_titulo_curto_invalido - TypeError: validar() takes 1 positional argument but 3 were given
+FAILED tests/test_task.py::test_prazo_passado - TypeError: validar() takes 1 positional argument but 3 were given
+================================================================================================== 3 failed, 4 passed in 0.13s ================================================================================================== 
